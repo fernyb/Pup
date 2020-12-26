@@ -4,8 +4,6 @@ const fs = require("fs");
 const program = require("commander");
 program.version("0.1.0");
 
-const test = require("./todomvc-example.js");
-
 var opts = {
   generate: ".",
   featureName: null
@@ -33,8 +31,4 @@ if (opts['generate']) {
     console.log("Directory not found, we should create it.");
     console.log("Generate Dir: "+ dir);
   }
-}
-
-if (opts['featureName'] == "test") {
-  test();
 }
