@@ -23,6 +23,9 @@ test("add/delete todo items", async (done) => {
   expect(title).toMatch(/TodoMVC/);
   expect(title).not.toMatch(/TodoMVCnoMatch/);
 
+  // get html source
+  expect(await page.content()).toMatch(/\<title\>Vue\.js • TodoMVC\<\/title\>/);
+
   let h1 = await page.findElementWithTag("h1");
   expect(await h1.innerHTML()).toEqual("todos");
 
