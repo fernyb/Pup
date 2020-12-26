@@ -65,6 +65,28 @@ test("add/delete todo items", async (done) => {
   expect((await todoPage.todos()).length).toBe(0);
   await page.takeScreenshot();
 
+  // return all cookies
+  let cookies = await todoPage.cookies("http://todomvc.com/");
+  expect(cookies.length).toBe(3);
+  cookies.forEach((cookie) => {
+    let keys = Object.keys(cookie);
+    expect(keys).toContain("name");
+    expect(keys).toContain("value");
+    expect(keys).toContain("domain");
+    expect(keys).toContain("path");
+    expect(keys).toContain("expires");
+    expect(keys).toContain("size");
+    expect(keys).toContain("httpOnly");
+    expect(keys).toContain("secure");
+    expect(keys).toContain("session");
+  });
+
+  cookies = await todoPage.cookies();
+  expect(cookies.length).toBe(3);
+
+  cookies = await todoPage.cookies("http://google.com/");
+  expect(cookies.length).toBe(0);
+
   done();
 });
 
