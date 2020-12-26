@@ -18,6 +18,10 @@ class TodoItem extends P.PupElement {
     await el.click();
   }
 
+  async isComplete() {
+    return (await this.getClassNames()).includes("completed");
+  }
+
   async remove() {
     await this.hover();
     let el = await this.destroyButton();

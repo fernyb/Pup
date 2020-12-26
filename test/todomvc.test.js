@@ -47,7 +47,11 @@ test("add/delete todo items", async (done) => {
   expect(todoItems.length).toBeLessThan(3);
 
   await todoItems[0].markAsComplete();
+  expect(await todoItems[0].isComplete()).toBeTruthy();
+  expect(await todoItems[1].isComplete()).toBeFalsy();
+
   await todoItems[1].markAsComplete();
+  expect(await todoItems[1].isComplete()).toBeTruthy();
   await page.takeScreenshot();
 
   await (await todoPage.todoItems())[0].remove();
