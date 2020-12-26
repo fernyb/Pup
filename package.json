@@ -1,5 +1,5 @@
 {
-  "name": "Pup",
+  "name": "pup",
   "version": "1.0.0",
   "description": "Page Object Model for Puppeteer",
   "main": "lib/index.js",

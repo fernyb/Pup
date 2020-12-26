@@ -1,9 +1,8 @@
-const Pup = require("./lib/index.js").Pup;
-const Todo = require("./pages/todo.js");
+const Pup = require("../lib/index.js").Pup;
+const Todo = require("../pages/todo.js");
 
 
 describe("TodoMVC", () => {
-
 var p = null;
 
 beforeAll(() => {
