@@ -87,6 +87,42 @@ test("add/delete todo items", async (done) => {
   cookies = await todoPage.cookies("http://google.com/");
   expect(cookies.length).toBe(0);
 
+  expect((await todoPage.todos()).length).toBe(0);
+  //expect(await todoPage.todoCountElement()).toBeNull();
+
+  // Add Two Items
+  await todoPage.enterTodoItem("Orange Juice");
+  await todoPage.enterTodoItem("Coffee Beans");
+  expect((await todoPage.todos()).length).toBe(2);
+
+  expect(await todoPage.todoCountElement()).not.toBeNull();
+  expect(await todoPage.todoCountText()).toEqual("2 items left");
+
+  // refresh page and verify items are still being displayed
+  await todoPage.reload();
+  expect((await todoPage.todos()).length).toBe(2);
+
+  // remove todo item and reload
+  await (await todoPage.todoItems())[0].remove();
+  expect((await todoPage.todos()).length).toBe(1);
+  expect(await todoPage.todoCountText()).toEqual("1 item left");
+
+  await todoPage.reload();
+  expect((await todoPage.todos()).length).toBe(1);
+  expect(await todoPage.todoCountText()).toEqual("1 item left");
+
+  let isVisible = await (await todoPage.todoCountElement()).isVisible();
+  expect(isVisible).toBeTruthy();
+
+  await (await todoPage.todoItems())[0].remove();
+  expect((await todoPage.todos()).length).toBe(0);
+
+  isVisible = await (await todoPage.todoCountElement()).isVisible();
+  expect(isVisible).toBeFalsy();
+
+  await todoPage.reload();
+  expect((await todoPage.todos()).length).toBe(0);
+
   done();
 });
 

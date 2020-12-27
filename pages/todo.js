@@ -1,8 +1,14 @@
 const P = require("../lib/index.js");
 
+class TodoCountElement extends P.PupElement {
+  constructor(pup, element) {
+    super(pup, element);
+  }
+}
+
 class TodoItem extends P.PupElement {
-  constructor(element) {
-    super(element);
+  constructor(pup, element) {
+    super(pup, element);
   }
 
   async checkbox() {
@@ -35,6 +41,19 @@ class Todo extends P.PupPage {
     super(pup);
   }
 
+  async todoCountElement() {
+    let todoCount = (await this.findElements(".todo-count"))[0];
+    if (todoCount) {
+      return (new TodoCountElement(this, todoCount));
+    } else {
+      return null;
+    }
+  }
+
+  async todoCountText() {
+    return await (await this.todoCountElement()).innerText();
+  }
+
   async textfield() {
       return await this.findBySelector("input.new-todo");
   }
@@ -51,7 +70,7 @@ class Todo extends P.PupPage {
   }
 
   async todoItems() {
-    return (await this.todos()).map(el => new TodoItem(el));
+    return (await this.todos()).map(el => new TodoItem(this, el));
   }
 }
 
