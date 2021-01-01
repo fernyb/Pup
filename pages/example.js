@@ -26,6 +26,42 @@ class ExamplePage extends P.PupPage {
   async h1Title() {
     return await this.findElementWithTag("h1");
   }
+
+  async delayAlertBtn() {
+    let els = await this.findElements("#delay-alert");
+    if (els.length > 0) {
+      return new P.PupElement(this, els[0]);
+    } else {
+      return null;
+    }
+  }
+
+  async ajaxBtn() {
+    let els = await this.findElements("#get-response");
+    if (els.length > 0) {
+      return new P.PupElement(this, els[0]);
+    } else {
+      return null;
+    }
+  }
+
+  async ajaxResponseElement() {
+    let els = await this.findElements(".ajax-response");
+    if (els.length > 0) {
+      return new P.PupElement(this, els[0]);
+    } else {
+      return null;
+    }
+  }
+
+  stubSlowResponseEndpoint() {
+    this.stubRequest("http://localhost:3000/public/slow_response?inactive=true", (request) => {
+      request.respond({
+        content: 'application/json',
+        body: '{"world":"hello"}'
+      })
+    });
+  }
 }
 
 module.exports = ExamplePage;

@@ -65,4 +65,57 @@ describe("PupApp", () => {
 
     done();
   });
+
+  test("alert", async (done) => {
+    let page = await p.newPage("http://localhost:3000/public/examples");
+    let examplePage = new ExamplePage(page);
+
+    examplePage.onAlertAccept();
+    await (await examplePage.delayAlertBtn()).click();
+    let dialog = await examplePage.waitForAlertToFinish();
+
+    expect(dialog.type).toEqual("alert");
+    expect(dialog.message).toEqual("Delayed Hello!");
+
+    done();
+  });
+
+  test("ajax", async (done) => {
+    let page = await p.newPage("http://localhost:3000/public/examples");
+    let examplePage = new ExamplePage(page);
+    examplePage.onAlertAccept();
+
+    await (await examplePage.ajaxBtn()).click();
+    await examplePage.waitForAlertToFinish();
+
+    await examplePage.waitForSelector(".ajax-response");
+
+    let element = await examplePage.ajaxResponseElement();
+
+    let html = await element.innerHTML();
+    expect(html).toEqual('{"hello":"world"}');
+
+    done();
+  });
+
+  test("ajax intercept", async (done) => {
+    let page = await p.newPage("http://localhost:3000/public/examples");
+    await page.setRequestInterception(true);
+
+    let examplePage = new ExamplePage(page);
+    examplePage.onAlertAccept();
+    examplePage.stubSlowResponseEndpoint();
+
+    await (await examplePage.ajaxBtn()).click();
+    await examplePage.waitForAlertToFinish();
+
+    await examplePage.waitForSelector(".ajax-response");
+
+    let element = await examplePage.ajaxResponseElement();
+
+    let html = await element.innerHTML();
+    expect(html).toEqual('{"world":"hello"}');
+
+    done();
+  });
 });
