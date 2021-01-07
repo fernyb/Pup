@@ -45,8 +45,8 @@ class ExamplePage extends P.PupPage {
     }
   }
 
-  async ajaxResponseElement() {
-    let els = await this.findElements(".ajax-response");
+  async postButton() {
+    let els = await this.findElements("#post-response");
     if (els.length > 0) {
       return new P.PupElement(this, els[0]);
     } else {
@@ -54,13 +54,13 @@ class ExamplePage extends P.PupPage {
     }
   }
 
-  stubSlowResponseEndpoint() {
-    this.stubRequest("http://localhost:3000/public/slow_response?inactive=true", (request) => {
-      request.respond({
-        content: 'application/json',
-        body: '{"world":"hello"}'
-      })
-    });
+  async ajaxResponseElement() {
+    let els = await this.findElements(".ajax-response");
+    if (els.length > 0) {
+      return new P.PupElement(this, els[0]);
+    } else {
+      return null;
+    }
   }
 }
 
