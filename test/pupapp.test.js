@@ -32,7 +32,7 @@ describe("PupApp", () => {
 
     // we should be at the root page /
     h1 = await page.findElementWithTag("h1");
-    expect(await h1.innerText()).toEqual("Posts");
+    expect(await h1.innerText()).toEqual("Active Posts");
 
     done();
   });
@@ -61,7 +61,7 @@ describe("PupApp", () => {
 
     h1 = await examplePage.h1Title();
     expect(await h1.innerText()).not.toEqual("Examples");
-    expect(await h1.innerText()).toEqual("Posts");
+    expect(await h1.innerText()).toEqual("Active Posts");
 
     done();
   });
@@ -80,7 +80,7 @@ describe("PupApp", () => {
     done();
   });
 
-  test("ajax", async (done) => {
+  test("ajax with dialog", async (done) => {
     let page = await p.newPage("http://localhost:3000/public/examples");
     let examplePage = new ExamplePage(page);
     examplePage.onAlertAccept();
