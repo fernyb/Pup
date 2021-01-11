@@ -5,6 +5,25 @@ class ExamplePage extends P.PupPage {
     super(pup);
   }
 
+  async iFrameBtn() {
+    let els = await this.findElements("#iframe-toggle");
+    if (els.length > 0) {
+      return (new P.PupElement(this, els[0]));
+    } else {
+      return null;
+    }
+  }
+
+  async iFrameElement(callback) {
+    let els = await this.findElements("iframe");
+    if (els.length > 0) {
+      callback(els[0]);
+      //return new P.PupElement(this, els[0]);
+    } else {
+      return null;
+    }
+  }
+
   async elementToggleBtn() {
     let els = await this.findElements("#element-toggle");
     if (els.length > 0) {
