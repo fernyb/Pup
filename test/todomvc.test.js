@@ -1,4 +1,4 @@
-const Pup = require("../lib/index.js").Pup;
+const P = require("../lib/index.js");
 const Todo = require("../pages/todo.js");
 
 require("../matchers/cookie.js");
@@ -7,7 +7,7 @@ describe("TodoMVC", () => {
 var p = null;
 
 beforeAll(() => {
-  p = new Pup();
+  p = new P.Pup();
 });
 
 afterAll(async () => {

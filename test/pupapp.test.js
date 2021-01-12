@@ -48,7 +48,7 @@ describe("PupApp", () => {
     //
     // verify we do not navigate
     await (await examplePage.clickableLink()).click();
-    examplePage.waitFor(2000);
+    examplePage.waitForTimeout(2000);
 
     expect(await h1.innerText()).toEqual("Examples");
 
