@@ -37,6 +37,32 @@ describe("PupApp", () => {
     done();
   });
 
+  test("find using css, h1:contains('Examples')", async (done) => {
+    let page = await p.newPage("http://localhost:3000/public/examples");
+    let examplePage = new ExamplePage(page);
+
+    let h1 = await examplePage.getH1Tag();
+    expect(await h1.innerText()).toEqual("Examples");
+
+    let h1Tag = await examplePage.findBySelector("h1:contains('Examples')")
+    expect(await h1Tag.innerText()).toEqual("Examples");
+
+    done();
+  });
+
+  test("auto wait", async (done) => {
+    let page = await p.newPage("http://localhost:3000/public/examples");
+    let examplePage = new ExamplePage(page);
+
+    // uses the selector: p:contains('Contact Us')
+    // benefit of going this way is reusability. 
+    // the selector exist in the method, if selector changes you can update the method.
+    let textMessageEl = await examplePage.messageTextElement();
+    expect(await textMessageEl.innerText()).toEqual("Thanks for visiting. Contact Us for more information");
+
+    done();
+  });
+
   test("using page object model", async (done) => {
     let page = await p.newPage("http://localhost:3000/public/examples");
     await page.waitForSelector("#element-toggle");
@@ -45,6 +71,11 @@ describe("PupApp", () => {
 
     let h1 = await examplePage.h1Title();
     expect(await h1.innerText()).toEqual("Examples");
+
+    // using CSS to find h1:contains('Examples')
+    let h1Tag = await examplePage.findBySelector("h1:contains('Examples')")
+    expect(await h1Tag.innerText()).toEqual("Examples");
+
     //
     // verify we do not navigate
     await (await examplePage.clickableLink()).click();
@@ -251,7 +282,7 @@ describe("PupApp", () => {
     done();
   });
 
-  test("iframe click", async (done) => {
+  test("iframe click, custom timeout", async (done) => {
     let page = await p.newPage("http://localhost:3000/public/examples");
     let examplePage = new ExamplePage(page);
     await examplePage.wait(3000);

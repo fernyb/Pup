@@ -14,6 +14,17 @@ class ExamplePage extends P.PupPage {
     }
   }
 
+  async messageTextElement() {
+    let elements = await this.findAndWaitForElements("p:contains('Contact Us')");
+    return new P.PupElement(this, elements[0]);
+  }
+
+  async getH1Tag() {
+    let xpath = this.css2xpath("h1:contains('Examples')");
+    await this.waitForXPath(xpath);
+    return await this.findByXpath(xpath);
+  }
+
   async iFrameElement(callback) {
     let els = await this.findElements("iframe");
     if (els.length > 0) {
