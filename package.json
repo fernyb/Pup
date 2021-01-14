@@ -4,7 +4,7 @@
   "description": "Page Object Model for Puppeteer",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "pup": "./cli.js"
   },
   "author": "Fernando Barajas",
