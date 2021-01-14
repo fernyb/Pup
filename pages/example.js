@@ -1,8 +1,18 @@
 const P = require("../lib/index.js");
+const NestedRoot = require("../components/nested_root.js");
 
 class ExamplePage extends P.PupPage {
   constructor(pup) {
     super(pup);
+  }
+
+  get rootQuery() {
+    return "body";
+  }
+
+  async nestedRoot() {
+    let nodes = await this.findAndWaitForElements("div#nest_root");
+    return new NestedRoot(this, nodes[0]);
   }
 
   async iFrameBtn() {
