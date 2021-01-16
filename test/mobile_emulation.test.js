@@ -60,6 +60,32 @@ describe("PupApp Mobile", () => {
     done();
   });
 
+  test("tap", async (done) => {
+    let page = await p.newPage("https://github.com/puppeteer/puppeteer/blob/v5.5.0/src/common/DeviceDescriptors.ts");
+    await page.wait(2000);
+
+    let menuBtn = await page.findBySelector("[aria-label='Toggle navigation']");
+    await menuBtn.tap();
+    await page.wait(2000);
+
+    let githubMenuItem = await page.findBySelector("summary:contains('Why GitHub')");
+    let point = await githubMenuItem.centerPoint();
+    await page.mouse.move(point.x, point.y);
+    await githubMenuItem.tap();
+    await page.wait(1000);
+
+    await page.scroll(100);
+    await page.wait(1000);
+
+    await page.scroll(100);
+    await page.wait(1000);
+
+    await page.scroll(100);
+    await page.wait(1000);
+
+    done();
+  });
+
   test("scroll up /down", async (done) => {
     let page = await p.newPage("https://mdn.mozillademos.org/en-US/docs/Web/API/Element/wheel_event$samples/Scaling_an_element_via_the_wheel?revision=1587366");
     await page.wait(2000);
