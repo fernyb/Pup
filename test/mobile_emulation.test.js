@@ -43,7 +43,19 @@ describe("PupApp Mobile", () => {
 
   test("view source code", async (done) => {
     let page = await p.newPage("https://github.com/puppeteer/puppeteer/blob/v5.5.0/src/common/DeviceDescriptors.ts");
-    await page.wait(10000);
+    await page.wait(2000);
+
+    await page.mouse.move(100, 100);
+
+    for(let i=0; i<50; i++) {
+      await page.scroll(400);
+      await page.wait(100);
+    }
+
+    for(let i=0; i<50; i++) {
+      await page.scroll(-400);
+      await page.wait(100);
+    }
 
     done();
   });
