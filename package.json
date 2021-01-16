@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "jest --runInBand",
+    "test:env": "USE_CHROME=true jest --runInBand test/environment_variables.test.js",
     "pup": "./cli.js"
   },
   "author": "Fernando Barajas",
