@@ -59,4 +59,27 @@ describe("PupApp Mobile", () => {
 
     done();
   });
+
+  test("scroll up /down", async (done) => {
+    let page = await p.newPage("https://mdn.mozillademos.org/en-US/docs/Web/API/Element/wheel_event$samples/Scaling_an_element_via_the_wheel?revision=1587366");
+    await page.wait(2000);
+
+    let div = await page.findElementWithTag('div');
+    let centerPoint = await div.centerPoint();
+
+    await page.mouse.move(centerPoint.x, centerPoint.y);
+    for(let i=0; i<5; i++) {
+      await page.scroll(-20);
+      await page.wait(500);
+    }
+
+    for(let i=0; i<7; i++) {
+      await page.scroll(10);
+      await page.wait(500);
+    }
+
+    await page.wait(2000);
+
+    done();
+  });
 });
