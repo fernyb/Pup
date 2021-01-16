@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "jest --runInBand",
+    "test:debug": "ndb jest --runInBand",
     "test:mobile": "USE_MOBILE_EMULATION=true jest --runInBand",
     "test:env": "USE_CHROME=true jest --runInBand test/environment_variables.test.js",
     "pup": "./cli.js"
@@ -20,6 +21,7 @@
     "puppeteer": "^5.5.0"
   },
   "devDependencies": {
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "ndb": "^1.1.5"
   }
 }
