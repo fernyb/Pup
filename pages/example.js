@@ -15,6 +15,16 @@ class ExamplePage extends P.PupPage {
     return new NestedRoot(this, nodes[0]);
   }
 
+  async setCookieBtn() {
+    let els = await this.findAndWaitForElements("button:contains('Set Cookie')");
+    return new P.PupElement(this, els[0]);
+  }
+
+  async clearCookieBtn() {
+    let els = await this.findAndWaitForElements("button:contains('Clear Cookie')");
+    return new P.PupElement(this, els[0]);
+  }
+
   async iFrameBtn() {
     let els = await this.findElements("#iframe-toggle");
     if (els.length > 0) {
