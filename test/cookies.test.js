@@ -68,4 +68,92 @@ describe("Nested Finders", () => {
 
     done();
   })
+
+  test("Set Cookie", async (done) => {
+    // https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#pagesetcookiecookies
+    let page = await p.newPage("http://localhost:3000/public/examples");
+    let examplePage = new ExamplePage(page);
+
+    let cookies = await examplePage.cookies();
+    let cookie = cookies.find(x => x['name'] == 'cheese');
+    expect(cookie).toBeUndefined();
+
+    let expiresUnixTime = Math.floor(new Date().getTime() / 1000) + Math.floor(60 / 14);
+
+    await examplePage.setCookie({
+      name: "cheese",
+      value: "blue",
+      url: "http://localhost:3000/public/examples",
+      domain: "localhost",
+      path: "/",
+      expires: expiresUnixTime,
+      httpOnly: true, /* httpOnly cookie would not be acessible throught JS */
+      secure: false, /* secure should be set for https sites */
+      sameSite: "Lax"
+    });
+
+    await examplePage.reload();
+
+    cookies = await examplePage.cookies();
+    cookie = cookies.find(x => x['name'] == 'cheese');
+    expect(cookie).not.toBeUndefined();
+
+    expect(cookie).toHaveProperty('name', 'cheese');
+    expect(cookie).toHaveProperty('value', 'blue');
+    expect(cookie).toHaveProperty('domain', 'localhost');
+    expect(cookie).toHaveProperty('expires', expiresUnixTime);
+    expect(cookie).toHaveProperty('path', '/');
+    expect(cookie).toHaveProperty('httpOnly', true);
+    expect(cookie).toHaveProperty('secure', false);
+    expect(cookie).toHaveProperty('sameSite', 'Lax');
+
+    await examplePage.wait(5000); // wait for cookie to expire
+    await examplePage.reload();
+
+    cookies = await examplePage.cookies();
+    cookie = cookies.find(x => x['name'] == 'cheese');
+    expect(cookie).toBeUndefined();
+
+    done();
+  });
+
+  test("Delete Cookie", async (done) => {
+    let page = await p.newPage("http://localhost:3000/public/examples");
+    let examplePage = new ExamplePage(page);
+
+    let cookies = await examplePage.cookies();
+    let cookie = cookies.find(x => x['name'] == 'cheese');
+    expect(cookie).toBeUndefined();
+
+    let expiresUnixTime = Math.floor(new Date().getTime() / 1000) + Math.floor(60 / 14);
+
+    await examplePage.setCookie({
+      name: "cheese",
+      value: "blue",
+      url: "http://localhost:3000/public/examples",
+      domain: "localhost",
+      path: "/",
+      expires: expiresUnixTime,
+      httpOnly: true, /* httpOnly cookie would not be acessible throught JS */
+      secure: false, /* secure should be set for https sites */
+      sameSite: "Lax"
+    });
+
+    await examplePage.reload();
+
+    cookies = await examplePage.cookies();
+    cookie = cookies.find(x => x['name'] == 'cheese');
+    expect(cookie).not.toBeUndefined();
+
+    await examplePage.deleteCookie({
+      name: "cheese"
+    });
+
+    await examplePage.reload();
+    cookies = await examplePage.cookies();
+    cookie = cookies.find(x => x['name'] == 'cheese');
+    expect(cookie).toBeUndefined();
+
+    done();
+  });
 });
