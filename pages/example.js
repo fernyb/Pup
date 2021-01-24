@@ -34,6 +34,15 @@ class ExamplePage extends P.PupPage {
     }
   }
 
+  async rightclickElement() {
+    return this.waitAndFindSelector("section[name=rightClick] "+
+      "div:contains('Right Click Here') div");
+  }
+
+  async rightclickResultElement() {
+    return this.waitAndFindSelector("[name=rightclickResult]");
+  }
+
   async timezoneElement() {
     return this.waitAndFindSelector("[name=currentTimezone]");
   }
