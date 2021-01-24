@@ -25,7 +25,7 @@ describe("Nested Finders", () => {
     expect(await el.innerText()).toEqual("Cookie: pupCookie =");
 
     done();
-  })
+  });
 
   test("Inspect Cookies", async (done) => {
     let page = await p.newPage("http://localhost:3000/public/examples");

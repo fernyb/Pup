@@ -34,6 +34,10 @@ class ExamplePage extends P.PupPage {
     }
   }
 
+  async timezoneElement() {
+    return this.waitAndFindSelector("[name=currentTimezone]");
+  }
+
   async messageTextElement() {
     let elements = await this.findAndWaitForElements("p:contains('Contact Us')");
     return new P.PupElement(this, elements[0]);
