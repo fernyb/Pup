@@ -34,6 +34,14 @@ class ExamplePage extends P.PupPage {
     }
   }
 
+  async dragBoxElement() {
+    return await this.waitAndFindSelector("#makeMeDraggable");
+  }
+
+  async dragBoxPosElement() {
+    return await this.waitAndFindSelector("#draggablePosition");
+  }
+
   async rightclickElement() {
     return this.waitAndFindSelector("section[name=rightClick] "+
       "div:contains('Right Click Here') div");
