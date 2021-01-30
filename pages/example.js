@@ -25,6 +25,11 @@ class ExamplePage extends P.PupPage {
     return new P.PupElement(this, els[0]);
   }
 
+  async appVersionContainer() {
+    let els = await this.findAndWaitForElements("[name=headers] div");
+    return new P.PupElement(this, els[0]);
+  }
+
   async iFrameBtn() {
     let els = await this.findElements("#iframe-toggle");
     if (els.length > 0) {
