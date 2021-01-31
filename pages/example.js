@@ -30,6 +30,11 @@ class ExamplePage extends P.PupPage {
     return new P.PupElement(this, els[0]);
   }
 
+  async downloadBtn() {
+    let els = await this.findAndWaitForElements("button[name=download]");
+    return new P.PupElement(this, els[0]);
+  }
+
   async iFrameBtn() {
     let els = await this.findElements("#iframe-toggle");
     if (els.length > 0) {
