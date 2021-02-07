@@ -45,7 +45,7 @@ describe("PupApp Mobile", () => {
     let page = await p.newPage("https://github.com/puppeteer/puppeteer/blob/v5.5.0/src/common/DeviceDescriptors.ts");
     await page.wait(2000);
 
-    await page.mouse.move(100, 100);
+    await (await page.mouse()).move(100, 100);
 
     for(let i=0; i<50; i++) {
       await page.scroll(400);
@@ -70,7 +70,7 @@ describe("PupApp Mobile", () => {
 
     let githubMenuItem = await page.findBySelector("summary:contains('Why GitHub')");
     let point = await githubMenuItem.centerPoint();
-    await page.mouse.move(point.x, point.y);
+    await (await page.mouse()).move(point.x, point.y);
     await githubMenuItem.tap();
     await page.wait(1000);
 
@@ -93,7 +93,7 @@ describe("PupApp Mobile", () => {
     let div = await page.findElementWithTag('div');
     let centerPoint = await div.centerPoint();
 
-    await page.mouse.move(centerPoint.x, centerPoint.y);
+    await (await page.mouse()).move(centerPoint.x, centerPoint.y);
     for(let i=0; i<5; i++) {
       await page.scroll(-20);
       await page.wait(500);

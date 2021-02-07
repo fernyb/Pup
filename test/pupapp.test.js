@@ -179,7 +179,7 @@ describe("PupApp", () => {
     await page.setRequestInterception(true);
 
     let examplePage = new ExamplePage(page);
-    examplePage.onAlertAccept();
+    await examplePage.onAlertAccept();
     examplePage.onRequestIntercept({
       pattern: /slow_response/,
       methods: ["GET"],
@@ -293,7 +293,7 @@ describe("PupApp", () => {
     await examplePage.wait(3000);
 
     await examplePage.iFrameElement(async (frameElement) => {
-      let rect = await examplePage.page.evaluate((el) => {
+      let rect = await (await examplePage.page()).evaluate((el) => {
         let rect = el.getBoundingClientRect();
         return {
           top: rect.top,
@@ -305,7 +305,7 @@ describe("PupApp", () => {
 
       let x = (rect.right / 2) + rect.left;
       let y = (rect.bottom / 2) + rect.top;
-      await examplePage.mouse.move(x, y);
+      await (await examplePage.mouse()).move(x, y);
 
       setTimeout(async function() {
         let frame = await frameElement.contentFrame();
@@ -317,7 +317,7 @@ describe("PupApp", () => {
     await examplePage.wait(30000);
 
     await examplePage.iFrameElement(async (frameElement) => {
-      let rect = await examplePage.page.evaluate((el) => {
+      let rect = await (await examplePage.page()).evaluate((el) => {
         let rect = el.getBoundingClientRect();
         return {
           top: rect.top,
@@ -329,7 +329,7 @@ describe("PupApp", () => {
 
       let x = (rect.right / 2) + rect.left;
       let y = (rect.bottom / 2) + rect.top;
-      await examplePage.mouse.move(x, y);
+      await (await examplePage.mouse()).move(x, y);
 
       setTimeout(async function() {
         let frame = await frameElement.contentFrame();

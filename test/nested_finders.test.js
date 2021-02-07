@@ -38,8 +38,14 @@ describe("Nested Finders", () => {
     let examplePage = new ExamplePage(page);
     let nestedRoot = await examplePage.nestedRoot();
 
+//    console.log(nestedRoot.selectorScope);
+
     let nestedChildren = await nestedRoot.nestedChildrenContainers();
     expect(nestedChildren.length).toBe(3);
+
+//    console.log(`0: ${nestedChildren[0].selectorScope}`);
+//    console.log(`1: ${nestedChildren[1].selectorScope}`);
+//    console.log(`2: ${nestedChildren[2].selectorScope}`);
 
     // verify we have an image on the first child
     expect(
@@ -50,6 +56,7 @@ describe("Nested Finders", () => {
 
     // verify we do not have images on the second child
     expect(await nestedChildren[1].hasImage()).toBeFalsy();
+
     expect(await nestedChildren[2].hasImage()).toBeFalsy();
 
     expect(

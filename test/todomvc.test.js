@@ -18,6 +18,8 @@ test("add/delete todo items", async (done) => {
   let page = await p.newPage("http://todomvc.com/examples/vue/#/all");
 
   await p.waitForTitle();
+  await page.clearLocalStorage();
+  await page.reload();
 
   let title = await page.title();
   expect(title).toEqual("Vue.js • TodoMVC");
@@ -38,10 +40,13 @@ test("add/delete todo items", async (done) => {
   expect(htmlList).toContain("API Reference");
   expect(htmlList).not.toContain("Dashshund");
 
-  let todoPage = new Todo(p);
+  let todoPage = new Todo(page);
   await todoPage.enterTodoItem("Hello");
   await todoPage.enterTodoItem("World");
+  await todoPage.takeScreenshot();
+
   expect((await todoPage.todos()).length).toBe(2);
+
 
   let todoItems = await todoPage.todoItems();
   expect(await todoItems[0].innerText()).toEqual("Hello");

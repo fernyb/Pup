@@ -58,11 +58,11 @@ class ExamplePage extends P.PupPage {
   }
 
   async rightclickResultElement() {
-    return this.waitAndFindSelector("[name=rightclickResult]");
+    return await this.waitAndFindSelector("[name=rightclickResult]");
   }
 
   async timezoneElement() {
-    return this.waitAndFindSelector("[name=currentTimezone]");
+    return await this.waitAndFindSelector("[name=currentTimezone]");
   }
 
   async messageTextElement() {
@@ -74,6 +74,10 @@ class ExamplePage extends P.PupPage {
     let xpath = this.css2xpath("h1:contains('Examples')");
     await this.waitForXPath(xpath);
     return await this.findByXpath(xpath);
+  }
+
+  async newWindowLink() {
+    return await this.waitAndFindSelector("a:contains('New Window target')");
   }
 
   async iFrameElement(callback) {
