@@ -35,12 +35,26 @@ describe("New Tab", () => {
 
     let homePage = new HomePage(page2);
     expect(await homePage.url()).toBe("http://localhost:3000/");
-
     await homePage.wait(3000);
-
     await homePage.close();
+    await page.wait(1000);
 
-    await page.wait(3000);
+    expect(await p.pages()).toHaveLength(2);
+    await (await examplePage.newWindowLink()).click({ newPage: true });
+    expect(await p.pages()).toHaveLength(3);
+
+    page2 = await p.lastPage();
+    expect(await page2.url()).toBe("http://localhost:3000/");
+
+    homePage = new HomePage(page2);
+    expect(await homePage.url()).toBe("http://localhost:3000/");
+
+    await p.activateTabAtIndex(1);
+    await examplePage.wait(2000);
+
+    await (await examplePage.newWindowLink()).click({ newPage: true });
+    expect(await p.pages()).toHaveLength(4);
+    await examplePage.wait(2000);
 
     done();
   });
