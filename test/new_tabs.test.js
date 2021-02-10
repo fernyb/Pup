@@ -36,6 +36,12 @@ describe("New Tab", () => {
     let homePage = new HomePage(page2);
     expect(await homePage.url()).toBe("http://localhost:3000/");
 
+    await homePage.wait(3000);
+
+    await homePage.close();
+
+    await page.wait(3000);
+
     done();
   });
 });
