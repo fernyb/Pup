@@ -98,4 +98,72 @@ describe("Intercept", () => {
     done();
   });
 
+  test("POST intercept without respond", async (done) => {
+    let page = await p.newPage("http://localhost:3000/public/examples");
+    await page.setRequestInterception(true);
+
+    let examplePage = new ExamplePage(page);
+    examplePage.onRequestIntercept({
+      pattern: /slow_response/,
+      methods: ["POST"],
+      collect: true
+    });
+
+    await (await examplePage.postButton()).click();
+    let requests = await examplePage.waitForRequestIntercept();
+
+    console.log(requests);
+    expect(requests.length).toBe(1);
+
+    let req = requests[0];
+    expect(req['url']).toEqual("http://localhost:3000/public/slow_response");
+    expect(req['method']).toEqual("POST");
+    expect(req['postData']).toEqual("user_id=100&inactive=true");
+
+    await examplePage.waitForSelector(".ajax-response");
+
+    let element = await examplePage.ajaxResponseElement();
+
+    let html = await element.innerHTML();
+    expect(html).toEqual('{"method":"POST","request":true}');
+
+    done();
+  });
+
+  test("POST intercept with respond", async (done) => {
+    let page = await p.newPage("http://localhost:3000/public/examples");
+    await page.setRequestInterception(true);
+
+    let examplePage = new ExamplePage(page);
+    examplePage.onRequestIntercept({
+      pattern: /slow_response/,
+      methods: ["POST"],
+      collect: true,
+      respond: {
+        contentType: 'application/json',
+        body: '{"request":false,"intercept":true,"method":"POST"}'
+      }
+    });
+
+    await (await examplePage.postButton()).click();
+    let requests = await examplePage.waitForRequestIntercept();
+
+    console.log(requests);
+    expect(requests.length).toBe(1);
+
+    let req = requests[0];
+    expect(req['url']).toEqual("http://localhost:3000/public/slow_response");
+    expect(req['method']).toEqual("POST");
+    expect(req['postData']).toEqual("user_id=100&inactive=true");
+
+    await examplePage.waitForSelector(".ajax-response");
+
+    let element = await examplePage.ajaxResponseElement();
+
+    let html = await element.innerHTML();
+    expect(html).toEqual('{"request":false,"intercept":true,"method":"POST"}');
+
+    done();
+  });
+
 });
