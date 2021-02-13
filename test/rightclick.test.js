@@ -1,7 +1,7 @@
 const Pup = require("../lib/index.js").Pup;
 const ExamplePage = require("../pages/example.js");
 
-describe("Nested Finders", () => {
+describe("Right Click", () => {
   let p = null;
 
   beforeAll(() => {
