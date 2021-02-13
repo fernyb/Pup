@@ -13,7 +13,7 @@ describe("Cookies", () => {
   });
 
   test("Cookies", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     let examplePage = new ExamplePage(page);
 
     await (await examplePage.setCookieBtn()).click();
@@ -28,10 +28,10 @@ describe("Cookies", () => {
   });
 
   test("Inspect Cookies", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
 
     let examplePage = new ExamplePage(page);
-    await examplePage.goto("http://localhost:3000/public/examples?test=1");
+    await examplePage.goto(`http://${TEST_APP_HOST}:3000/public/examples?test=1`);
 
     examplePage.onResponseIntercept({
       pattern: /cookie/,
@@ -71,7 +71,7 @@ describe("Cookies", () => {
 
   test("Set Cookie", async (done) => {
     // https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#pagesetcookiecookies
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     let examplePage = new ExamplePage(page);
 
     let cookies = await examplePage.cookies();
@@ -83,8 +83,8 @@ describe("Cookies", () => {
     await examplePage.setCookie({
       name: "cheese",
       value: "blue",
-      url: "http://localhost:3000/public/examples",
-      domain: "localhost",
+      url: `http://${TEST_APP_HOST}:3000/public/examples`,
+      domain: `${TEST_APP_HOST}`,
       path: "/",
       expires: expiresUnixTime,
       httpOnly: true, /* httpOnly cookie would not be acessible throught JS */
@@ -100,7 +100,7 @@ describe("Cookies", () => {
 
     expect(cookie).toHaveProperty('name', 'cheese');
     expect(cookie).toHaveProperty('value', 'blue');
-    expect(cookie).toHaveProperty('domain', 'localhost');
+    expect(cookie).toHaveProperty('domain', `${TEST_APP_HOST}`);
     expect(cookie).toHaveProperty('expires', expiresUnixTime);
     expect(cookie).toHaveProperty('path', '/');
     expect(cookie).toHaveProperty('httpOnly', true);
@@ -118,7 +118,7 @@ describe("Cookies", () => {
   });
 
   test("Delete Cookie", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     let examplePage = new ExamplePage(page);
 
     let cookies = await examplePage.cookies();
@@ -130,8 +130,8 @@ describe("Cookies", () => {
     await examplePage.setCookie({
       name: "cheese",
       value: "blue",
-      url: "http://localhost:3000/public/examples",
-      domain: "localhost",
+      url: `http://${TEST_APP_HOST}:3000/public/examples`,
+      domain: `${TEST_APP_HOST}`,
       path: "/",
       expires: expiresUnixTime,
       httpOnly: true, /* httpOnly cookie would not be acessible throught JS */

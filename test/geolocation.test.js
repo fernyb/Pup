@@ -12,7 +12,7 @@ describe("PupApp Geolocation", () => {
   });
 
   test("accept geolocation", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
 
     await page.allowGeolocation({
       latitude: 33.980385999999996,

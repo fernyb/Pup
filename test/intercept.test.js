@@ -13,7 +13,7 @@ describe("Intercept", () => {
   });
 
   test("GET intercept without respond", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     await page.setRequestInterception(true);
 
     let examplePage = new ExamplePage(page);
@@ -38,14 +38,14 @@ describe("Intercept", () => {
     let requests = await examplePage.waitForRequestIntercept();
     expect(requests.length).toBe(1);
     let req = requests[0];
-    expect(req['url']).toEqual("http://localhost:3000/public/slow_response?inactive=true");
+    expect(req['url']).toEqual(`http://${TEST_APP_HOST}:3000/public/slow_response?inactive=true`);
     expect(req['method']).toEqual("GET");
 
     // GET Response
     let responses = await examplePage.waitForResponseIntercept();
     expect(responses.length).toBe(1);
     let res = responses[0];
-    expect(res['url']).toEqual("http://localhost:3000/public/slow_response?inactive=true");
+    expect(res['url']).toEqual(`http://${TEST_APP_HOST}:3000/public/slow_response?inactive=true`);
     expect(res['method']).toEqual("GET");
     expect(res['body']).toEqual('{"hello":"world"}');
 
@@ -59,7 +59,7 @@ describe("Intercept", () => {
   });
 
   test("GET intercept with respond", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     await page.setRequestInterception(true);
 
     let examplePage = new ExamplePage(page);
@@ -86,7 +86,7 @@ describe("Intercept", () => {
     let responses = await examplePage.waitForResponseIntercept();
     expect(responses.length).toBe(1);
     let res = responses[0];
-    expect(res['url']).toEqual("http://localhost:3000/public/slow_response?inactive=true");
+    expect(res['url']).toEqual(`http://${TEST_APP_HOST}:3000/public/slow_response?inactive=true`);
     expect(res['method']).toEqual("GET");
     expect(res['body']).toEqual('{"world":"hello"}');
 
@@ -99,7 +99,7 @@ describe("Intercept", () => {
   });
 
   test("POST intercept without respond", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     await page.setRequestInterception(true);
 
     let examplePage = new ExamplePage(page);
@@ -116,7 +116,7 @@ describe("Intercept", () => {
     expect(requests.length).toBe(1);
 
     let req = requests[0];
-    expect(req['url']).toEqual("http://localhost:3000/public/slow_response");
+    expect(req['url']).toEqual(`http://${TEST_APP_HOST}:3000/public/slow_response`);
     expect(req['method']).toEqual("POST");
     expect(req['postData']).toEqual("user_id=100&inactive=true");
 
@@ -131,7 +131,7 @@ describe("Intercept", () => {
   });
 
   test("POST intercept with respond", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     await page.setRequestInterception(true);
 
     let examplePage = new ExamplePage(page);
@@ -152,7 +152,7 @@ describe("Intercept", () => {
     expect(requests.length).toBe(1);
 
     let req = requests[0];
-    expect(req['url']).toEqual("http://localhost:3000/public/slow_response");
+    expect(req['url']).toEqual(`http://${TEST_APP_HOST}:3000/public/slow_response`);
     expect(req['method']).toEqual("POST");
     expect(req['postData']).toEqual("user_id=100&inactive=true");
 

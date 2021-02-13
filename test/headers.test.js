@@ -13,7 +13,7 @@ describe("Headers", () => {
   });
 
   test("Get Headers", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
 
     let examplePage = new ExamplePage(page);
     await examplePage.setRequestInterception(true);
@@ -36,7 +36,7 @@ describe("Headers", () => {
   });
 
   test("Set Header", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
 
     let examplePage = new ExamplePage(page);
     await examplePage.setRequestInterception(true);

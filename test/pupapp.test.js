@@ -13,7 +13,7 @@ describe("PupApp", () => {
   });
 
   test("clicking link should not navigate", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     await page.waitForSelector("#element-toggle");
 
     let el = await page.findBySelector("a#no-click");
@@ -38,7 +38,7 @@ describe("PupApp", () => {
   });
 
   test("find using css, h1:contains('Examples')", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     let examplePage = new ExamplePage(page);
 
     let h1 = await examplePage.getH1Tag();
@@ -51,7 +51,7 @@ describe("PupApp", () => {
   });
 
   test("auto wait", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     let examplePage = new ExamplePage(page);
 
     // uses the selector: p:contains('Contact Us')
@@ -64,7 +64,7 @@ describe("PupApp", () => {
   });
 
   test("using page object model", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     await page.waitForSelector("#element-toggle");
 
     let examplePage = new ExamplePage(page);

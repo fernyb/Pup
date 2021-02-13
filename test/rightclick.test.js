@@ -13,7 +13,7 @@ describe("Right Click", () => {
   });
 
   test("Right Click", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     let examplePage = new ExamplePage(page);
 
     await (await examplePage.rightclickElement()).rightClick();

@@ -17,24 +17,24 @@ describe("New Tab", () => {
   });
 
   test("link opens new window", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     let examplePage = new ExamplePage(page);
 
     expect(await p.pages()).toHaveLength(2);
 
-    expect(await examplePage.url()).toBe("http://localhost:3000/public/examples");
+    expect(await examplePage.url()).toBe(`http://${TEST_APP_HOST}:3000/public/examples`);
 
     await (await examplePage.newWindowLink()).click({ newPage: true });
 
     expect(await p.pages()).toHaveLength(3);
     
-    expect(await examplePage.url()).toBe("http://localhost:3000/public/examples");
+    expect(await examplePage.url()).toBe(`http://${TEST_APP_HOST}:3000/public/examples`);
 
     let page2 = await p.lastPage();
-    expect(await page2.url()).toBe("http://localhost:3000/");
+    expect(await page2.url()).toBe(`http://${TEST_APP_HOST}:3000/`);
 
     let homePage = new HomePage(page2);
-    expect(await homePage.url()).toBe("http://localhost:3000/");
+    expect(await homePage.url()).toBe(`http://${TEST_APP_HOST}:3000/`);
     await homePage.wait(3000);
     await homePage.close();
     await page.wait(1000);
@@ -44,10 +44,10 @@ describe("New Tab", () => {
     expect(await p.pages()).toHaveLength(3);
 
     page2 = await p.lastPage();
-    expect(await page2.url()).toBe("http://localhost:3000/");
+    expect(await page2.url()).toBe(`http://${TEST_APP_HOST}:3000/`);
 
     homePage = new HomePage(page2);
-    expect(await homePage.url()).toBe("http://localhost:3000/");
+    expect(await homePage.url()).toBe(`http://${TEST_APP_HOST}:3000/`);
 
     await p.activateTabAtIndex(1);
     await examplePage.wait(2000);
@@ -98,7 +98,7 @@ describe("New Tab", () => {
     expect(url).toBe("about:blank");
 
     url = await (await p.pages())[1].url();
-    expect(url).toBe("http://localhost:3000/");
+    expect(url).toBe(`http://${TEST_APP_HOST}:3000/`);
 
     const urls = (await p.pages()).map(async (el) => { 
       return (await el.url());
@@ -107,7 +107,7 @@ describe("New Tab", () => {
     const allUrls = await Promise.all(urls);
 
     expect(allUrls[0]).toBe("about:blank");
-    expect(allUrls[1]).toBe("http://localhost:3000/");
+    expect(allUrls[1]).toBe(`http://${TEST_APP_HOST}:3000/`);
 
     done();
   });

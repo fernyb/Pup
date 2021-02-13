@@ -19,7 +19,7 @@ describe("Download / Upload", () => {
   });
 
   test("Download", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     let examplePage = new ExamplePage(page);
 
     await (await examplePage.downloadBtn()).click();
@@ -38,7 +38,7 @@ describe("Download / Upload", () => {
   });
 
   test("Upload", async (done) => {
-    let page = await p.newPage("http://localhost:3000/posts/new");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/posts/new`);
     let newPostPage = new NewPostPage(page);
 
     let fileChooser = newPostPage.waitForFileChooser();

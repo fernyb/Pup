@@ -15,7 +15,7 @@ describe("PupApp Mobile", () => {
   });
 
   test("clicking link should not navigate", async (done) => {
-    let page = await p.newPage("http://localhost:3000/public/examples");
+    let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     await page.waitForSelector("#element-toggle");
 
     let el = await page.findBySelector("a#no-click");
