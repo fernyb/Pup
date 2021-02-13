@@ -2,7 +2,7 @@
 
 cd /pup
 
-nohup Xvfb :99 -screen 0 1024x768x24 &
+nohup Xvfb :99 -screen 0 1300x1000x24 &
 
 sleep 5
 

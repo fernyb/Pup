@@ -74,6 +74,10 @@ describe("Cookies", () => {
     let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     let examplePage = new ExamplePage(page);
 
+    await examplePage.deleteCookie({ name: "cheese" });
+    await examplePage.reload();
+    await examplePage.wait(2000);
+
     let cookies = await examplePage.cookies();
     let cookie = cookies.find(x => x['name'] == 'cheese');
     expect(cookie).toBeUndefined();
@@ -93,6 +97,7 @@ describe("Cookies", () => {
     });
 
     await examplePage.reload();
+    await examplePage.wait(1000);
 
     cookies = await examplePage.cookies();
     cookie = cookies.find(x => x['name'] == 'cheese');
