@@ -80,7 +80,7 @@ describe("New Tab", () => {
     await p.activateTabAtIndex(3);
     await examplePage.wait(200);
 
-    await p.activateTabAtIndex(3);
+    await p.activateTabAtIndex(2);
     await examplePage.wait(200);
 
     await p.closePageAtIndex(3);
