@@ -80,6 +80,7 @@ describe("Cookies", () => {
 
     let cookies = await examplePage.cookies();
     let cookie = cookies.find(x => x['name'] == 'cheese');
+    console.log(cookie); // this should always be Undefined if cookie was deleted
     expect(cookie).toBeUndefined();
 
     let expiresUnixTime = Math.floor(new Date().getTime() / 1000) + Math.floor(60 / 14);
