@@ -1,0 +1,5 @@
+version: "3.9"
+services:
+  test:
+    build: .
+    command: bash -c "/pup/run_test.sh"

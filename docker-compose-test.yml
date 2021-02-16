@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  test_1_test:
+    image: pup
+    command: bash -c "/pup/run_test.sh ./test/alert.test.js ./test/cookies.test.js ./test/download_upload.test.js ./test/dragndrop.test.js ./test/environment_variables.test.js ./test/geolocation.test.js ./test/headers.test.js ./test/iframe.test.js ./test/intercept.test.js"
+
+  test_2_test:
+    image: pup
+    command: bash -c "/pup/run_test.sh ./test/mobile_emulation.test.js ./test/nested_finders.test.js ./test/new_tabs.test.js ./test/pupapp.test.js ./test/rightclick.test.js ./test/sum.test.js ./test/timezone.test.js ./test/todomvc.test.js"

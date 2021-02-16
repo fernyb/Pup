@@ -6,7 +6,7 @@ nohup Xvfb :99 -screen 0 1300x1000x24 &
 
 sleep 5
 
-npm run test
+npm run test -- $@
 
 pkill Xvfb
 sleep 3
