@@ -1,10 +1,13 @@
-const P = require("../lib/index.js");
+const {
+  Pup,
+  PupElement
+} = require("../lib/index.js");
 
 describe("PupApp Geolocation", () => {
   let p = null;
 
   beforeAll(() => {
-    p = new P.Pup();
+    p = new Pup();
   });
 
   afterAll(async () => {
@@ -19,13 +22,16 @@ describe("PupApp Geolocation", () => {
       longitude: -118.08758439999998
     });
 
-    let btn = await page.findBySelector("button:contains('Get Current GeoLocation')");
+    let btnRaw= await page.findBySelector("button:contains('Get Current GeoLocation')");
+    let btn = new PupElement(page, btnRaw);
     await btn.click();
 
-    let divLat = await page.waitAndFindSelector(".geolocation_results div:contains('Latitude')");
+    let divLatRaw = await page.waitAndFindSelector(".geolocation_results div:contains('Latitude')");
+    let divLat = new PupElement(page, divLatRaw);
     expect(await divLat.innerText()).toEqual("Latitude: 33.980385999999996");
 
-    let divLon = await page.findBySelector(".geolocation_results div:contains('Longitude')");
+    let divLonRaw = await page.findBySelector(".geolocation_results div:contains('Longitude')");
+    let divLon = new PupElement(page, divLonRaw);
     expect(await divLon.innerText()).toEqual("Longitude: -118.08758439999998");
 
     await page.wait(3000);

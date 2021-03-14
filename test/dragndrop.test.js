@@ -1,4 +1,7 @@
-const Pup = require("../lib/index.js").Pup;
+const {
+  Pup,
+  PupElement
+} = require("../lib/index.js");
 const ExamplePage = require("../pages/example.js");
 
 describe("Drag N Drop", () => {
@@ -16,8 +19,12 @@ describe("Drag N Drop", () => {
     let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     let examplePage = new ExamplePage(page);
 
-    let posEl = await examplePage.dragBoxPosElement();
-    let el = await examplePage.dragBoxElement();
+    let rposEl = await examplePage.dragBoxPosElement();
+    let posEl = new PupElement(examplePage, rposEl);
+
+    let rel = await examplePage.dragBoxElement();
+    let el = new PupElement(examplePage, rel);
+
     await el.mouseDown();
 
     await el.mouseMove(40, 40);

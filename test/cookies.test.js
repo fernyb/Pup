@@ -1,4 +1,7 @@
-const Pup = require("../lib/index.js").Pup;
+const {
+  Pup,
+  PupElement
+} = require("../lib/index.js");
 const ExamplePage = require("../pages/example.js");
 
 describe("Cookies", () => {
@@ -17,11 +20,13 @@ describe("Cookies", () => {
     let examplePage = new ExamplePage(page);
 
     await (await examplePage.setCookieBtn()).click();
-    let el = await examplePage.waitAndFindSelector(".cookieResponse");
+    let rel = await examplePage.waitAndFindSelector(".cookieResponse");
+    let el = new PupElement(examplePage, rel);
     expect(await el.innerText()).toEqual("Cookie: pupCookie = CookieJar");
 
     await (await examplePage.clearCookieBtn()).click();
-    el = await examplePage.waitAndFindSelector(".cookieResponse");
+    rel = await examplePage.waitAndFindSelector(".cookieResponse");
+    el = new PupElement(examplePage, rel);
     expect(await el.innerText()).toEqual("Cookie: pupCookie =");
 
     done();

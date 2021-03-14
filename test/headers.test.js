@@ -1,4 +1,7 @@
-const Pup = require("../lib/index.js").Pup;
+const {
+  Pup,
+  PupElement
+} = require("../lib/index.js");
 const ExamplePage = require("../pages/example.js");
 
 describe("Headers", () => {

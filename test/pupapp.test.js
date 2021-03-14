@@ -1,4 +1,7 @@
-const Pup = require("../lib/index.js").Pup;
+const {
+  Pup,
+  PupElement
+} = require("../lib/index.js");
 const ExamplePage = require("../pages/example.js");
 
 describe("PupApp", () => {
@@ -20,7 +23,8 @@ describe("PupApp", () => {
     await el.click();
 
     // verify we do not navigate
-    let h1 = await page.findElementWithTag("h1");
+    let h1raw = await page.findElementWithTag("h1");
+    let h1 = new PupElement(page, h1raw);
     expect(await h1.innerText()).not.toEqual("Posts");
 
     // toggle the element so the link is clickable
@@ -31,7 +35,8 @@ describe("PupApp", () => {
     await page.waitForText("Posts");
 
     // we should be at the root page /
-    h1 = await page.findElementWithTag("h1");
+    h1raw = await page.findElementWithTag("h1");
+    h1 = new PupElement(page, h1raw);
     expect(await h1.innerText()).toEqual("Active Posts");
 
     done();
@@ -41,10 +46,12 @@ describe("PupApp", () => {
     let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     let examplePage = new ExamplePage(page);
 
-    let h1 = await examplePage.getH1Tag();
+    let h1raw = await examplePage.getH1Tag();
+    let h1 = new PupElement(page, h1raw);
     expect(await h1.innerText()).toEqual("Examples");
 
-    let h1Tag = await examplePage.findBySelector("h1:contains('Examples')")
+    let h1TagRaw = await examplePage.findBySelector("h1:contains('Examples')")
+    let h1Tag = new PupElement(page, h1TagRaw);
     expect(await h1Tag.innerText()).toEqual("Examples");
 
     done();
@@ -69,11 +76,12 @@ describe("PupApp", () => {
 
     let examplePage = new ExamplePage(page);
 
-    let h1 = await examplePage.h1Title();
+    let h1= await examplePage.h1Title();
     expect(await h1.innerText()).toEqual("Examples");
 
     // using CSS to find h1:contains('Examples')
-    let h1Tag = await examplePage.findBySelector("h1:contains('Examples')")
+    let h1TagRaw = await examplePage.findBySelector("h1:contains('Examples')")
+    let h1Tag = new PupElement(examplePage, h1TagRaw);
     expect(await h1Tag.innerText()).toEqual("Examples");
 
     //

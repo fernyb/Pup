@@ -1,4 +1,7 @@
-const Pup = require("../lib/index.js").Pup;
+const {
+  Pup,
+  PupElement
+} = require("../lib/index.js");
 const ExamplePage = require("../pages/example.js");
 
 describe("PupApp Mobile", () => {
@@ -18,22 +21,26 @@ describe("PupApp Mobile", () => {
     let page = await p.newPage(`http://${TEST_APP_HOST}:3000/public/examples`);
     await page.waitForSelector("#element-toggle");
 
-    let el = await page.findBySelector("a#no-click");
+    let elraw = await page.findBySelector("a#no-click");
+    let el = new PupElement(page, elraw);
     await el.click();
 
     // verify we do not navigate
-    let h1 = await page.findElementWithTag("h1");
+    let h1raw = await page.findElementWithTag("h1");
+    let h1 = new PupElement(page, h1raw);
     expect(await h1.innerText()).not.toEqual("Posts");
 
     // toggle the element so the link is clickable
-    let btn = await page.findBySelector("button#element-toggle");
+    let btnraw = await page.findBySelector("button#element-toggle");
+    let btn = new PupElement(page, btnraw);
     await btn.click();
 
     await el.click();
     await page.waitForText("Posts");
 
     // we should be at the root page /
-    h1 = await page.findElementWithTag("h1");
+    h1raw = await page.findElementWithTag("h1");
+    h1 = new PupElement(page, h1raw);
     expect(await h1.innerText()).toEqual("Active Posts");
 
     await page.wait(3000);
@@ -64,11 +71,14 @@ describe("PupApp Mobile", () => {
     let page = await p.newPage("https://github.com/puppeteer/puppeteer/blob/v5.5.0/src/common/DeviceDescriptors.ts");
     await page.wait(2000);
 
-    let menuBtn = await page.findBySelector("[aria-label='Toggle navigation']");
+    let menuBtnRaw = await page.findBySelector("[aria-label='Toggle navigation']");
+    let menuBtn = new PupElement(page, menuBtnRaw);
     await menuBtn.tap();
     await page.wait(2000);
 
-    let githubMenuItem = await page.findBySelector("summary:contains('Why GitHub')");
+    let githubMenuItemRaw = await page.findBySelector("summary:contains('Why GitHub')");
+    let githubMenuItem = new PupElement(page, githubMenuItemRaw);
+
     let point = await githubMenuItem.centerPoint();
     await (await page.mouse()).move(point.x, point.y);
     await githubMenuItem.tap();
@@ -90,7 +100,8 @@ describe("PupApp Mobile", () => {
     let page = await p.newPage("https://mdn.mozillademos.org/en-US/docs/Web/API/Element/wheel_event$samples/Scaling_an_element_via_the_wheel?revision=1587366");
     await page.wait(2000);
 
-    let div = await page.findElementWithTag('div');
+    let divraw = await page.findElementWithTag('div');
+    let div = new PupElement(page, divraw);
     let centerPoint = await div.centerPoint();
 
     await (await page.mouse()).move(centerPoint.x, centerPoint.y);

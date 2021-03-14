@@ -1,4 +1,7 @@
-const P = require("../lib/index.js");
+const {
+  Pup,
+  PupElement
+} = require("../lib/index.js");
 const Todo = require("../pages/todo.js");
 
 require("../matchers/cookie.js");
@@ -7,7 +10,7 @@ describe("TodoMVC", () => {
 var p = null;
 
 beforeAll(() => {
-  p = new P.Pup();
+  p = new Pup();
 });
 
 afterAll(async () => {
@@ -29,12 +32,14 @@ test("add/delete todo items", async (done) => {
   // get html source
   expect(await page.content()).toMatch(/\<title\>Vue\.js • TodoMVC\<\/title\>/);
 
-  let h1 = await page.findElementWithTag("h1");
+  let h1raw = await page.findElementWithTag("h1");
+  let h1 = new PupElement(page, h1raw);
   expect(await h1.innerHTML()).toEqual("todos");
 
   let els = await page.findElementsWithTag("a");
   let htmlList = await Promise.all(els.map(async (el) => {
-    return await el.innerHTML();
+    return await (new PupElement(page, el)).innerHTML();
+    //return await el.innerHTML();
   }));
 
   expect(htmlList).toContain("API Reference");

@@ -1,12 +1,16 @@
-const P = require("../lib/index.js");
+const {
+  Pup,
+  PupPageBase,
+  PupElement
+} = require("../lib/index.js");
 
-class TodoCountElement extends P.PupElement {
+class TodoCountElement extends PupElement {
   constructor(pup, element) {
     super(pup, element);
   }
 }
 
-class TodoItem extends P.PupElement {
+class TodoItem extends PupElement {
   constructor(pup, element) {
     super(pup, element);
   }
@@ -36,7 +40,7 @@ class TodoItem extends P.PupElement {
   }
 }
 
-class Todo extends P.PupPage {
+class Todo extends PupPageBase {
   constructor(pup) {
     super(pup);
   }
@@ -55,7 +59,9 @@ class Todo extends P.PupPage {
   }
 
   async textfield() {
-      return await this.findBySelector("input.new-todo");
+    return this.findBySelector("input.new-todo").then((el) => {
+      return new PupElement(this, el);
+    });
   }
 
   async enterTodoItem(name) {

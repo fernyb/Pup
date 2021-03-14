@@ -1,7 +1,11 @@
-const P = require("../lib/index.js");
+const {
+  Pup,
+  PupPageBase,
+  PupElement
+} = require("../lib/index.js");
 const NestedRoot = require("../components/nested_root.js");
 
-class ExamplePage extends P.PupPage {
+class ExamplePage extends PupPageBase {
   constructor(pup) {
     super(pup);
   }
@@ -17,31 +21,27 @@ class ExamplePage extends P.PupPage {
 
   async setCookieBtn() {
     let els = await this.findAndWaitForElements("button:contains('Set Cookie')");
-    return new P.PupElement(this, els[0]);
+    return new PupElement(this, els[0]);
   }
 
   async clearCookieBtn() {
     let els = await this.findAndWaitForElements("button:contains('Clear Cookie')");
-    return new P.PupElement(this, els[0]);
+    return new PupElement(this, els[0]);
   }
 
   async appVersionContainer() {
     let els = await this.findAndWaitForElements("[name=headers] div");
-    return new P.PupElement(this, els[0]);
+    return new PupElement(this, els[0]);
   }
 
   async downloadBtn() {
     let els = await this.findAndWaitForElements("button[name=download]");
-    return new P.PupElement(this, els[0]);
+    return new PupElement(this, els[0]);
   }
 
   async iFrameBtn() {
     let els = await this.findElements("#iframe-toggle");
-    if (els.length > 0) {
-      return (new P.PupElement(this, els[0]));
-    } else {
-      return null;
-    }
+    return (new PupElement(this, els[0]));
   }
 
   async dragBoxElement() {
@@ -54,20 +54,27 @@ class ExamplePage extends P.PupPage {
 
   async rightclickElement() {
     return this.waitAndFindSelector("section[name=rightClick] "+
-      "div:contains('Right Click Here') div");
+      "div:contains('Right Click Here') div").then((el) => {
+        return new PupElement(this, el);
+      });
   }
 
   async rightclickResultElement() {
-    return await this.waitAndFindSelector("[name=rightclickResult]");
+    return this.waitAndFindSelector("[name=rightclickResult]").then((el) => {
+      return new PupElement(this, el);
+    });
   }
 
   async timezoneElement() {
-    return await this.waitAndFindSelector("[name=currentTimezone]");
+    return this.waitAndFindSelector("[name=currentTimezone]").then((el) => {
+      return new PupElement(this, el);
+    });
   }
 
   async messageTextElement() {
-    let elements = await this.findAndWaitForElements("p:contains('Contact Us')");
-    return new P.PupElement(this, elements[0]);
+    return this.findAndWaitForElements("p:contains('Contact Us')").then((elements) => {
+      return new PupElement(this, elements[0]);
+    });
   }
 
   async getH1Tag() {
@@ -77,75 +84,49 @@ class ExamplePage extends P.PupPage {
   }
 
   async newWindowLink() {
-    return await this.waitAndFindSelector("a:contains('New Window target')");
+    let el = await this.waitAndFindSelector("a:contains('New Window target')");
+    return new PupElement(this, el);
   }
 
   async iFrameElement(callback) {
     let els = await this.findElements("iframe");
-    if (els.length > 0) {
-      callback(els[0]);
-      //return new P.PupElement(this, els[0]);
-    } else {
-      return null;
-    }
+    callback(els[0]);
   }
 
   async elementToggleBtn() {
     let els = await this.findElements("#element-toggle");
-    if (els.length > 0) {
-      return new P.PupElement(this, els[0]);
-    } else {
-      return null;
-    }
+    return new PupElement(this, els[0]);
   }
 
   async clickableLink() {
     let els = await this.findElements("a#no-click");
-    if (els.length > 0) {
-      return new P.PupElement(this, els[0]);
-    } else {
-      return null;
-    }
+    return new PupElement(this, els[0]);
   }
 
   async h1Title() {
-    return await this.findElementWithTag("h1");
+    return this.findElementWithTag("h1").then((el) => {
+      return new PupElement(this, el);
+    });
   }
 
   async delayAlertBtn() {
     let els = await this.findElements("#delay-alert");
-    if (els.length > 0) {
-      return new P.PupElement(this, els[0]);
-    } else {
-      return null;
-    }
+    return new PupElement(this, els[0]);
   }
 
   async ajaxBtn() {
     let els = await this.findElements("#get-response");
-    if (els.length > 0) {
-      return new P.PupElement(this, els[0]);
-    } else {
-      return null;
-    }
+    return new PupElement(this, els[0]);
   }
 
   async postButton() {
     let els = await this.findElements("#post-response");
-    if (els.length > 0) {
-      return new P.PupElement(this, els[0]);
-    } else {
-      return null;
-    }
+    return new PupElement(this, els[0]);
   }
 
   async ajaxResponseElement() {
     let els = await this.findElements(".ajax-response");
-    if (els.length > 0) {
-      return new P.PupElement(this, els[0]);
-    } else {
-      return null;
-    }
+    return new PupElement(this, els[0]);
   }
 }
 

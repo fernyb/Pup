@@ -1,9 +1,9 @@
 const {
   Pup,
-  PupPage
+  PupPageBase
 } = require("../lib/index.js");
 
-class HomePage extends PupPage {
+class HomePage extends PupPageBase {
   constructor(pup) {
     super(pup);
   }

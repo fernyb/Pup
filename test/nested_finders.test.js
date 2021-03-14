@@ -1,4 +1,6 @@
-const Pup = require("../lib/index.js").Pup;
+const {
+  Pup
+} = require("../lib/index.js");
 const ExamplePage = require("../pages/example.js");
 
 describe("Nested Finders", () => {
