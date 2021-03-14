@@ -3,3 +3,4 @@ screenshots/*.png
 .DS_Store
 user-data
 downloads/*
+coverage/*

@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "jest --runInBand",
+    "test:coverage": "jest --coverage --runInBand",
     "jest": "jest",
     "test:debug": "ndb jest --runInBand",
     "test:mobile": "USE_MOBILE_EMULATION=true jest --runInBand",

@@ -19,7 +19,7 @@ describe("Timezone", () => {
 
     let el = await examplePage.timezoneElement();
     let zone = await el.innerText();
-    expect(zone).toMatch(/GMT-0800 \(Pacific Standard Time\)/);
+    expect(zone).toMatch(/GMT-0800 \(Pacific Standard Time\)|GMT-0700 \(Pacific Daylight Time\)/);
 
     done();
   });
@@ -34,7 +34,7 @@ describe("Timezone", () => {
 
     let el = await examplePage.timezoneElement();
     let zone = await el.innerText();
-    expect(zone).toMatch(/GMT-0800 \(Pacific Standard Time\)/);
+    expect(zone).toMatch(/GMT-0800 \(Pacific Standard Time\)|GMT-0700 \(Pacific Daylight Time\)/);
 
     // https://source.chromium.org/chromium/chromium/deps/icu.git/+/faee8bc70570192d82d2978a71e2a615788597d1:source/data/misc/metaZones.txt
     // use a different timezone
@@ -43,15 +43,15 @@ describe("Timezone", () => {
 
     el = await examplePage.timezoneElement();
     zone = await el.innerText();
-    expect(zone).not.toMatch(/GMT-0800 \(Pacific Standard Time\)/);
-    expect(zone).toMatch(/GMT-0500 \(Eastern Standard Time\)/);
+    expect(zone).not.toMatch(/GMT-0800 \(Pacific Standard Time\)|GMT-0700 \(Pacific Daylight Time\)/);
+    expect(zone).toMatch(/GMT-0500 \(Eastern Standard Time\)|GMT-0400 \(Eastern Daylight Time\)/);
 
     await examplePage.reload();
 
     el = await examplePage.timezoneElement();
     zone = await el.innerText();
-    expect(zone).not.toMatch(/GMT-0800 \(Pacific Standard Time\)/);
-    expect(zone).toMatch(/GMT-0500 \(Eastern Standard Time\)/);
+    expect(zone).not.toMatch(/GMT-0800 \(Pacific Standard Time\)|GMT-0700 \(Pacific Daylight Time\)/);
+    expect(zone).toMatch(/GMT-0500 \(Eastern Standard Time\)|GMT-0400 \(Eastern Daylight Time\)/);
 
     // reset timezone to default
     await examplePage.emulateTimezone(null);
@@ -61,7 +61,7 @@ describe("Timezone", () => {
     zone = await el.innerText();
 
     // this will fail if your browser is not in America/Los_Angeles
-    expect(zone).toMatch(/GMT-0800 \(Pacific Standard Time\)/);
+    expect(zone).toMatch(/GMT-0800 \(Pacific Standard Time\)|GMT-0700 \(Pacific Daylight Time\)/);
 
     done();
   });
