@@ -1,4 +1,11 @@
-# pup
+# Pup - Page Object Model for Puppeteer
+
+# Ubuntu:
+
+  To install:
+
+    make install
+
 
 # Windows Users
 
