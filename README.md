@@ -2,6 +2,8 @@
 
 # Ubuntu:
 
+  If you have issues with chromium not downloading automatically run the following to run npm install and download chromium.
+
   To install:
 
     make install
