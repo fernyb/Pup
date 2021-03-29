@@ -55,5 +55,5 @@ ENV TZ "America/Los_Angeles"
 
 RUN chmod +x ./run_test.sh
 
-CMD ["/pup/run_test.sh"]
-#ENTRYPOINT ["/pup/run_test.sh"]
+#CMD ["/pup/run_test.sh"]
+ENTRYPOINT ["/bin/bash"]

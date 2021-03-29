@@ -5,3 +5,8 @@ user-data
 downloads/*
 coverage/*
 docs/*
+build
+create
+create_container
+create_container_name
+stop_container
