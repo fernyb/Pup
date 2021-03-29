@@ -37,7 +37,7 @@ start_container: build_image
 	docker run --rm -d -it \
 	-v $(CURRENT_DIR)/test:/pup/test \
 	-v $(CURRENT_DIR)/lib:/pup/lib \
-	 $$(cat create_container_name) > start_container
+	 pup:$(CURRENT_BRANCH) > start_container
 	 rm stop_container
 	@echo ""
 	docker container ls
